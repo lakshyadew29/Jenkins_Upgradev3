@@ -1,10 +1,22 @@
 pipeline {
     agent any
+        
+    environment {
+        DOTNET_HOME = "/usr/share/dotnet"
+        PATH = "$PATH:$DOTNET_HOME"
+    }
 
     stages {
         stage('Install .NET 7 SDK') {
             steps {
-                sh 'curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 7.0'
+                sh '''
+		        sudo curl -fsSL -o dotnet-install.sh https://dot.net/v1/dotnet-install.sh
+		        sudo chmod +x dotnet-install.sh
+		        sudo ./dotnet-install.sh --version 7.0.116 --install-dir ${DOTNET_HOME} --no-path
+		        export PATH=\"$PATH:${DOTNET_HOME}\"
+		        sudo dotnet --info
+                '''
+            
             }
         }
 
