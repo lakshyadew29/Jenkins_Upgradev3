@@ -52,7 +52,7 @@ pipeline {
            // when {
            //     expression { return params.RELEASE }
            // }
-
+           // Above expression run when we pass true in RELEASE then run below step other don't run 
             steps {
                 archiveArtifacts('**/*.war')
             }
